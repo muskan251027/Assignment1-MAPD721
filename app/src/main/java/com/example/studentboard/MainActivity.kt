@@ -218,13 +218,33 @@ private fun StudentBoard() {
             }
         }
 
-//        AboutSection()
+        AboutSection()
 
     }
 
 }
 
-
+@Composable
+private fun AboutSection() {
+    Spacer(modifier = Modifier.height(50.dp))
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Start
+    ) {
+        Icon(imageVector = Icons.Default.Person, contentDescription = null)
+        Spacer(modifier = Modifier.width(4.dp))
+        Text("Student name: Muskan Aggarwal", color = Color.Black)
+    }
+    Spacer(modifier = Modifier.height(4.dp))
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Start
+    ) {
+        Icon(imageVector = Icons.Default.Edit, contentDescription = null)
+        Spacer(modifier = Modifier.width(4.dp))
+        Text("Student ID: 301399676", color = Color.Black)
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
