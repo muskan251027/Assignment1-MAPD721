@@ -90,7 +90,15 @@ private fun StudentBoard() {
     // Get instance of Student preferences to mutate the stored data
     val studentPreferences = StudentPreferences.getInstance(context)
 
-    
+    // Toast message to load the messages during save and clear of data
+    var toastMessage by remember { mutableStateOf<String?>(null) }
+
+    fun showAndHideToast() {
+        if (toastMessage != null) {
+            Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+            toastMessage = null
+        }
+    }
 
     // Main Interface
     Column(
@@ -162,6 +170,15 @@ private fun StudentBoard() {
                                 email.value.text,
                                 id.value.text.toInt()
                             )
+                            toastMessage = "Saved successfully"
+                            // Reset fields after saving
+                            username.value = TextFieldValue("")
+                            email.value = TextFieldValue("")
+                            id.value = TextFieldValue("676")
+
+                            withContext(Dispatchers.Main) {
+                                showAndHideToast()
+                            }
                         }
 
                     },
@@ -179,6 +196,15 @@ private fun StudentBoard() {
                     onClick = {
                         CoroutineScope(Dispatchers.IO).launch {
                             studentPreferences.clearStudentInfo()
+                            toastMessage = "Removed successfully"
+                            // Reset fields after clearing
+                            username.value = TextFieldValue("")
+                            email.value = TextFieldValue("")
+                            id.value = TextFieldValue("676")
+
+                            withContext(Dispatchers.Main) {
+                                showAndHideToast()
+                            }
                         }
                     },
                     modifier = Modifier.weight(1f),
