@@ -43,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -77,6 +78,7 @@ class MainActivity : ComponentActivity() {
 private fun StudentBoard() {
 
     val context = LocalContext.current
+
     val username = remember {
         mutableStateOf(TextFieldValue(""))
     }
@@ -92,6 +94,7 @@ private fun StudentBoard() {
 
     // Toast message to load the messages during save and clear of data
     var toastMessage by remember { mutableStateOf<String?>(null) }
+    var showLoadedData by remember { mutableStateOf(false) }
 
     fun showAndHideToast() {
         if (toastMessage != null) {
@@ -151,6 +154,11 @@ private fun StudentBoard() {
                             username.value = TextFieldValue(studentInfo.username)
                             email.value = TextFieldValue(studentInfo.email)
                             id.value = TextFieldValue(studentInfo.id.toString())
+
+                            // Set the variable to show loaded data
+                            if (username.value.text.isNotEmpty() && email.value.text.isNotEmpty() && id.value.text.isNotEmpty()) {
+                                showLoadedData = true
+                            }
                         }
                     },
                     modifier = Modifier.weight(1f),
@@ -179,6 +187,7 @@ private fun StudentBoard() {
                             withContext(Dispatchers.Main) {
                                 showAndHideToast()
                             }
+                            showLoadedData = false
                         }
 
                     },
@@ -205,6 +214,7 @@ private fun StudentBoard() {
                             withContext(Dispatchers.Main) {
                                 showAndHideToast()
                             }
+                            showLoadedData = false
                         }
                     },
                     modifier = Modifier.weight(1f),
@@ -216,6 +226,12 @@ private fun StudentBoard() {
                 Spacer(modifier = Modifier.width(8.dp))
 
             }
+
+            // Show loaded data when Load button is clicked
+            if (showLoadedData) {
+                LoadedData(username.value.text, email.value.text, id.value.text)
+            }
+
         }
 
         AboutSection()
@@ -243,6 +259,23 @@ private fun AboutSection() {
         Icon(imageVector = Icons.Default.Edit, contentDescription = null)
         Spacer(modifier = Modifier.width(4.dp))
         Text("Student ID: 301399676", color = Color.Black)
+    }
+}
+
+@Composable
+fun LoadedData(username: String, email: String, id: String) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp)
+    ) {
+        Text("GENERATED DATA",color = Color.Black, fontStyle = FontStyle.Italic)
+        Spacer(modifier = Modifier.height(10.dp))
+        Text("Username: $username", color = Color.Black, fontStyle = FontStyle.Italic)
+        Spacer(modifier = Modifier.height(4.dp))
+        Text("Email: $email", color = Color.Black, fontStyle = FontStyle.Italic)
+        Spacer(modifier = Modifier.height(4.dp))
+        Text("ID: $id", color = Color.Black, fontStyle = FontStyle.Italic)
     }
 }
 
