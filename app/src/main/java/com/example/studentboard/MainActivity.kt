@@ -251,7 +251,7 @@ private fun AboutSection() {
         Spacer(modifier = Modifier.width(4.dp))
         Text("Student name: Muskan Aggarwal", color = Color.Black)
     }
-    Spacer(modifier = Modifier.height(4.dp))
+    Spacer(modifier = Modifier.height(5.dp))
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Start
